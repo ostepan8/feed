@@ -5,6 +5,7 @@ const Search = () => {
   return (
     <SafeAreaView>
       <Text>Search</Text>
+      <Text>another search</Text>
     </SafeAreaView>
   );
 };
