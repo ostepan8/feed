@@ -1,0 +1,113 @@
+const user = {
+  username: 'ohstep23',
+  name: 'Owen Stepan',
+  profilePicture: '',
+  followers: 10,
+  following: 30,
+  bio: 'I like to play basketball and stuff',
+  posts: [
+    {
+      image: require('../dummy-data/assets/food1.jpg'),
+      caption: 'I HEART VEGGIES',
+      time: '2/3/2023',
+      restaurant: "Owen's pizzeria",
+    },
+    {
+      image: require('../dummy-data/assets/food2.jpg'),
+      caption: 'My delicious burger',
+      time: '4/20/2023',
+      restaurant: 'La comidaria',
+    },
+    {
+      image: require('../dummy-data/assets/food3.jpg'),
+      caption: 'akjbd',
+      time: '10/27/2023',
+      restaurant: 'The Bathroom',
+    },
+    {
+      image: require('../dummy-data/assets/food2.jpg'),
+      caption: 'My delicious burger',
+      time: '4/20/2023',
+      restaurant: 'La comidaria',
+    },
+    {
+      image: require('../dummy-data/assets/food2.jpg'),
+      caption: 'My delicious burger',
+      time: '4/20/2023',
+      restaurant: 'La comidaria',
+    },
+    {
+      image: require('../dummy-data/assets/food2.jpg'),
+      caption: 'My delicious burger',
+      time: '4/20/2023',
+      restaurant: 'La comidaria',
+    },
+    {
+      image: require('../dummy-data/assets/food2.jpg'),
+      caption: 'My delicious burger',
+      time: '4/20/2023',
+      restaurant: 'La comidaria',
+    },
+    {
+      image: require('../dummy-data/assets/food2.jpg'),
+      caption: 'My delicious burger',
+      time: '4/20/2023',
+      restaurant: 'La comidaria',
+    },
+    {
+      image: require('../dummy-data/assets/food2.jpg'),
+      caption: 'My delicious burger',
+      time: '4/20/2023',
+      restaurant: 'La comidaria',
+    },
+    {
+      image: require('../dummy-data/assets/food2.jpg'),
+      caption: 'My delicious burger',
+      time: '4/20/2023',
+      restaurant: 'La comidaria',
+    },
+    {
+      image: require('../dummy-data/assets/food2.jpg'),
+      caption: 'My delicious burger',
+      time: '4/20/2023',
+      restaurant: 'La comidaria',
+    },
+    {
+      image: require('../dummy-data/assets/food2.jpg'),
+      caption: 'My delicious burger',
+      time: '4/20/2023',
+      restaurant: 'La comidaria',
+    },
+    {
+      image: require('../dummy-data/assets/food2.jpg'),
+      caption: 'My delicious burger',
+      time: '4/20/2023',
+      restaurant: 'La comidaria',
+    },
+    {
+      image: require('../dummy-data/assets/food2.jpg'),
+      caption: 'My delicious burger',
+      time: '4/20/2023',
+      restaurant: 'La comidaria',
+    },
+    {
+      image: require('../dummy-data/assets/food2.jpg'),
+      caption: 'My delicious burger',
+      time: '4/20/2023',
+      restaurant: 'La comidaria',
+    },
+    {
+      image: require('../dummy-data/assets/food2.jpg'),
+      caption: 'My delicious burger',
+      time: '4/20/2023',
+      restaurant: 'La comidaria',
+    },
+    {
+      image: require('../dummy-data/assets/food2.jpg'),
+      caption: 'My delicious burger',
+      time: '4/20/2023',
+      restaurant: 'La comidaria',
+    },
+  ],
+};
+export default user;
