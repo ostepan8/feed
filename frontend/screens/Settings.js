@@ -17,12 +17,11 @@ const Settings = ({navigation}) => {
   return (
     <ScrollView>
       <View style={styles.settingContainer}>
-        <Pressable onPress={() => authCntx.logout()}>
-          <View style={styles.logoutButton}>
+        <View style={[styles.logoutButton, {borderTopWidth: 0}]}>
+          <Pressable onPress={() => authCntx.logout()}>
             <Text style={styles.logoutText}>Logout</Text>
-          </View>
-          <FontAwesomeIcon icon={faCircleUser}></FontAwesomeIcon>
-        </Pressable>
+          </Pressable>
+        </View>
       </View>
     </ScrollView>
   );
@@ -33,11 +32,11 @@ export default Settings;
 const styles = StyleSheet.create({
   settingContainer: {
     flex: 1,
+    borderTopWidth: 1.5,
   },
   logoutButton: {
-    borderTopWidth: 1.5,
-    borderBottomWidth: 1.5,
     borderColor: 'grey',
+    borderTopWidth: 1.5,
   },
   logoutText: {
     fontSize: 16,

@@ -5,15 +5,15 @@ const User = mongoose.model("User");
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
   const token = authorization;
-  if (!authorization) {
+  if (!token) {
     return res.status(401).send({ error: "You must be logged in" });
   }
 
-  jwt.verify(authorization, process.env.JWT_SECRET, async (err, payload) => {
+  jwt.verify(token, process.env.JWT_SECRET, async (err, payload) => {
     if (err) {
       return res.status(401).json({ error: "You must be logged in" });
     }
-    console.log(payload);
+
     const { _id } = payload;
     console.log(_id);
     User.findById(_id).then((userData) => {

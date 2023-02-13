@@ -13,6 +13,29 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import color from '../color';
 import user from '../dummy-data/dummyData';
 import {useWindowDimensions} from 'react-native';
+import {faHeart} from '@fortawesome/free-regular-svg-icons';
+import {faComment} from '@fortawesome/free-regular-svg-icons';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+
+const Drawer = createDrawerNavigator();
+
+function MyDrawer() {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name="Feed" component={ReactImage} />
+    </Drawer.Navigator>
+  );
+}
+function ReactImage() {
+  return (
+    <View>
+      <Image
+        source={require('../dummy-data/assets/food1.jpg')}
+        style={{height: '100%', width: '100%'}}></Image>
+    </View>
+  );
+}
+
 const YourPost = ({navigation, route}) => {
   const {height, width} = useWindowDimensions();
   const {caption, image, restaurant, time} = route.params.data;
@@ -35,11 +58,21 @@ const YourPost = ({navigation, route}) => {
             <FontAwesomeIcon icon={faArrowLeft} size={20} />
           </View>
         </View>
+        <Text>{user.username}</Text>
         <View style={[styles.post, {width: width, height: width}]}>
-          <Image source={image} style={{width: '100%', height: '100%'}}></Image>
+          <MyDrawer />
         </View>
-        <View>
-          <Text>likes,comments, plated</Text>
+        <View style={styles.buttonContainer}>
+          <View style={styles.heart}>
+            <Pressable onPress={() => console.log('liked')}>
+              <FontAwesomeIcon size={height / 30} icon={faHeart} />
+            </Pressable>
+          </View>
+          <View style={styles.comment}>
+            <Pressable onPress={() => console.log('commented')}>
+              <FontAwesomeIcon size={height / 30} icon={faComment} />
+            </Pressable>
+          </View>
         </View>
         <View>
           <Text>{user.username}</Text>
@@ -58,6 +91,9 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     width: '100%',
+    paddingBottom: 6,
+    borderBottomWidth: 1,
+    borderBottomColor: '#00000020',
   },
   headerAligner: {
     marginLeft: 'auto',
@@ -69,7 +105,20 @@ const styles = StyleSheet.create({
     fontFamily: 'RedHatDisplay-Medium',
   },
   post: {
-    backgroundColor: 'grey',
     overflow: 'hidden',
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: '#00000020',
+    borderTopColor: '#00000020',
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    padding: 8,
+  },
+  heart: {
+    marginRight: 8,
+  },
+  comment: {
+    marginHorizontal: 8,
   },
 });

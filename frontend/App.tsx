@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-
+import 'react-native-gesture-handler';
 import {
   Pressable,
   SafeAreaView,
@@ -32,6 +32,7 @@ import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { faList } from '@fortawesome/free-solid-svg-icons';
 import color from './color';
 
+
 function UnAuthenticatedStack(){
   const Stack = createNativeStackNavigator();
 
@@ -40,6 +41,8 @@ function UnAuthenticatedStack(){
     <Stack.Screen name="Welcome" component={Welcome} options={{headerShown: false}}/>
     <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
     <Stack.Screen name="SignUp" component={SignUp} options={{headerShown: false}} />
+
+
     </Stack.Navigator>
   )
 }

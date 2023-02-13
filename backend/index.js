@@ -15,7 +15,6 @@ app.use(authRoutes);
 
 app.get("/", requireToken, (req, res) => {
   res.send(req.user);
-  console.log(req.user);
 });
 
 app.listen(port, () => {

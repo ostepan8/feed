@@ -4,6 +4,7 @@ import MainPage from './MainPage';
 
 import Settings from './Settings';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import EditProfile from './EditProfile';
 
 import YourPost from './YourPost';
 const Profile = ({navigation, route}) => {
@@ -20,6 +21,11 @@ const Profile = ({navigation, route}) => {
       <Stack.Screen
         name="YourPost"
         component={YourPost}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="EditProfile"
+        component={EditProfile}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

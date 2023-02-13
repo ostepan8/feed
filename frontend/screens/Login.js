@@ -40,6 +40,7 @@ const Login = ({navigation}) => {
             setErrorMsg(data.error);
           } else {
             authCntx.authenticate(data.token);
+            authCntx.storeUsername(fdata.email);
           }
         });
     }
@@ -75,6 +76,7 @@ const Login = ({navigation}) => {
             <View style={styles.formGroup}>
               <Text style={styles.label}>Email</Text>
               <TextInput
+                autoCorrect={false}
                 onPressIn={() => setErrorMsg(null)}
                 style={styles.input}
                 autoCapitalize="none"
@@ -85,6 +87,7 @@ const Login = ({navigation}) => {
             <View style={styles.formGroup}>
               <Text style={styles.label}>Password</Text>
               <TextInput
+                autoCorrect={false}
                 autoCapitalize="none"
                 onPressIn={() => setErrorMsg(null)}
                 secureTextEntry={true}

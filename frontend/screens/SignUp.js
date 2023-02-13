@@ -15,14 +15,17 @@ import color from '../color';
 import Button from '../components/Button';
 import feed from '../assets/img/feed.png';
 import {AuthContext} from '../store/auth-context';
+import {useWindowDimensions} from 'react-native';
 
 const SignUp = ({navigation}) => {
+  const {height, width} = useWindowDimensions();
   const [fdata, setFdata] = useState({
-    name: '',
+    fname: '',
+    lname: '',
     email: '',
     password: '',
     cPassword: '',
-    dob: '',
+    username: '',
   });
   const authCntx = useContext(AuthContext);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -31,11 +34,12 @@ const SignUp = ({navigation}) => {
   }
   function sendToTheBackend() {
     if (
-      fdata.name == '' ||
+      fdata.fname == '' ||
       fdata.cPassword == '' ||
       fdata.password == '' ||
-      fdata.dob == '' ||
-      fdata.email == ''
+      fdata.username == '' ||
+      fdata.email == '' ||
+      fdata.lname == ''
     ) {
       setErrorMsg('Please set all fields');
       return;
@@ -56,7 +60,6 @@ const SignUp = ({navigation}) => {
           if (data.error) {
             setErrorMsg(data.error);
           } else {
-            authCntx.authenticate(data.token);
             alert('Account created successfully');
             navigation.navigate('Login');
           }
@@ -94,15 +97,47 @@ const SignUp = ({navigation}) => {
               </View>
             ) : null}
             <ScrollView>
-              <View style={styles.formGroup}>
-                <Text style={styles.label}>Name</Text>
-                <TextInput
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                  onPressIn={() => setErrorMsg(null)}
-                  onChangeText={text => setFdata({...fdata, name: text})}
-                  style={styles.input}
-                  placeholder="Enter your name"></TextInput>
+              <View
+                style={[
+                  styles.formGroup,
+                  {flexDirection: 'row', justifyContent: 'space-between'},
+                ]}>
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={styles.label}>First Name</Text>
+                  <TextInput
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    onPressIn={() => setErrorMsg(null)}
+                    onChangeText={text => setFdata({...fdata, fname: text})}
+                    style={[
+                      styles.input,
+                      {paddingHorizontal: 16, width: width / 2.3},
+                    ]}
+                    placeholder="Enter your first name"></TextInput>
+                </View>
+
+                <View
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    paddingHorizontal: 16,
+                  }}>
+                  <Text style={styles.label}>Last Name</Text>
+                  <TextInput
+                    autoCapitalize="none"
+                    autoCorrect={false}
+                    onPressIn={() => setErrorMsg(null)}
+                    onChangeText={text => setFdata({...fdata, lname: text})}
+                    style={[
+                      styles.input,
+                      {paddingHorizontal: 16, width: width / 2.4},
+                    ]}
+                    placeholder="Enter your last name"></TextInput>
+                </View>
               </View>
               <View style={styles.formGroup}>
                 <Text style={styles.label}>E-Mail</Text>
@@ -115,12 +150,14 @@ const SignUp = ({navigation}) => {
                   placeholder="Enter your email"></TextInput>
               </View>
               <View style={styles.formGroup}>
-                <Text style={styles.label}>When's your birthday?</Text>
+                <Text style={styles.label}>Create a Username?</Text>
                 <TextInput
+                  autoCapitalize="none"
+                  autoCorrect={false}
                   onPressIn={() => setErrorMsg(null)}
-                  onChangeText={text => setFdata({...fdata, dob: text})}
+                  onChangeText={text => setFdata({...fdata, username: text})}
                   style={styles.input}
-                  placeholder="Enter your DOB"></TextInput>
+                  placeholder="Enter your username"></TextInput>
               </View>
               <View style={styles.formGroup}>
                 <Text style={styles.label}>Password</Text>
