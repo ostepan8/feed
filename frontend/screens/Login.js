@@ -39,8 +39,10 @@ const Login = ({navigation}) => {
           if (data.error) {
             setErrorMsg(data.error);
           } else {
+            console.log(data);
             authCntx.authenticate(data.token);
-            authCntx.storeUsername(fdata.email);
+            authCntx.storeEmail(fdata.email);
+            authCntx.storeUsername(data.username);
           }
         });
     }

@@ -5,7 +5,6 @@ import {
   Pressable,
   StyleSheet,
   Text,
-  FlatList,
   Image,
   RefreshControl,
 } from 'react-native';
@@ -20,35 +19,86 @@ import Followers from '../components/Followers';
 import {useEffect} from 'react';
 import {AuthContext} from '../store/auth-context';
 import {useContext, useState} from 'react';
-import Button from '../components/Button';
 import Feed from '../assets/img/feed.png';
-import {useFocusEffect} from '@react-navigation/native';
 import {useCallback} from 'react';
+import Button from '../components/Button';
 
 const MainPage = ({navigation, route}) => {
+  const [breakfastPostArray, setBreakfastPostArray] = useState([]);
+  const [lunchPostArray, setLunchPostArray] = useState([]);
+  const [dinnerPostArray, setDinnerPostArray] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/getPosts', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email: AuthCntx.email}),
+    })
+      .then(res => res.json())
+      .then(data => {
+        setBreakfastPostArray(data.breakfast);
+        setLunchPostArray(data.lunch);
+        setDinnerPostArray(data.dinner);
+      });
+  }, []);
+
   const backgroundColor = 'white';
-  const [data, setData] = useState({
+  const [fdata, fsetData] = useState({
     username: '',
     lname: '',
     bio: '',
     fname: '',
+    posts: [],
   });
   const [refreshing, setRefreshing] = useState(false);
   function getBackEndData() {
     fetch('http://localhost:3000/profile', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({email: AuthCntx.username}),
+      body: JSON.stringify({email: AuthCntx.email}),
     })
       .then(res => res.json())
       .then(data => {
-        setData({
+        fsetData({
           username: data.username,
           fname: data.fname,
           bio: data.bio,
           lname: data.lname,
         });
       });
+    fetch('http://localhost:3000/getPosts', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email: AuthCntx.email}),
+    })
+      .then(res => res.json())
+      .then(data => {
+        setBreakfastPostArray(data.breakfast);
+        setLunchPostArray(data.lunch);
+        setDinnerPostArray(data.dinner);
+      });
+
+    // fetch('http://localhost:3000/getPosts', {
+    //   method: 'POST',
+    //   headers: {'Content-Type': 'application/json'},
+    //   body: JSON.stringify({email: AuthCntx.email}),
+    // })
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     setBreakfastPostArray([]);
+    //     setLunchPostArray([]);
+    //     setDinnerPostArray([]);
+
+    //     for (i in data) {
+    //       if (data[i].type == 'Breakfast') {
+    //         setBreakfastPostArray([...breakfastPostArray, data[i]]);
+    //       } else if (data[i].type == 'Lunch') {
+    //         setLunchPostArray([...lunchPostArray, data[i]]);
+    //       } else if (data[i].type == 'Dinner') {
+    //         setDinnerPostArray([...dinnerPostArray, data[i]]);
+    //       }
+    //     }
+    //   });
   }
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -105,7 +155,7 @@ const MainPage = ({navigation, route}) => {
                     fontFamily: 'RedHatDisplay-Regular',
                   },
                 ]}>
-                {data.username}
+                {fdata.username}
               </Text>
             </View>
             <View
@@ -125,7 +175,7 @@ const MainPage = ({navigation, route}) => {
                     fontSize: height / 30,
                     textAlign: 'left',
                   }}>
-                  {data.fname} {data.lname}
+                  {fdata.fname} {fdata.lname}
                 </Text>
                 <Text
                   style={[
@@ -137,7 +187,7 @@ const MainPage = ({navigation, route}) => {
                       textAlign: 'center',
                     },
                   ]}>
-                  {data.bio ? data.bio : "Create your bio in 'edit'"}
+                  {fdata.bio ? fdata.bio : "Create your bio in 'edit'"}
                 </Text>
               </View>
 
@@ -168,7 +218,7 @@ const MainPage = ({navigation, route}) => {
                   ]}>
                   <Pressable
                     onPress={() =>
-                      navigation.navigate('EditProfile', {data: data})
+                      navigation.navigate('EditProfile', {data: fdata})
                     }>
                     <Text
                       style={{
@@ -225,9 +275,10 @@ const MainPage = ({navigation, route}) => {
                 Breakfast
               </Text>
               <ProfileScroller
-                data={user.posts}
+                data={breakfastPostArray}
                 navigation={navigation}></ProfileScroller>
             </View>
+
             <View style={styles.slideshowContainer}>
               <Text
                 style={[
@@ -239,7 +290,7 @@ const MainPage = ({navigation, route}) => {
                 Lunch
               </Text>
               <ProfileScroller
-                data={user.posts}
+                data={lunchPostArray}
                 navigation={navigation}></ProfileScroller>
             </View>
             <View style={styles.slideshowContainer}>
@@ -253,7 +304,7 @@ const MainPage = ({navigation, route}) => {
                 Dinner
               </Text>
               <ProfileScroller
-                data={user.posts}
+                data={dinnerPostArray}
                 navigation={navigation}></ProfileScroller>
             </View>
           </View>

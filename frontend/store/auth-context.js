@@ -9,14 +9,19 @@ export const AuthContext = createContext({
 });
 function AuthContextProvider({children}) {
   const [authToken, setAuthToken] = useState();
-  const [username, setUsername] = useState();
+  const [email, setEmail] = useState();
+  const [username, setUsername] = useState('');
   useEffect(() => {
     async function fetchToken() {
       const storedToken = await AsyncStorage.getItem('token');
       if (storedToken) {
         setAuthToken(storedToken);
       }
-      const storedUsername = await AsyncStorage.getItem('email');
+      const storedEmail = await AsyncStorage.getItem('email');
+      if (storedEmail) {
+        setEmail(storedEmail);
+      }
+      const storedUsername = await AsyncStorage.getItem('username');
       if (storedUsername) {
         setUsername(storedUsername);
       }
@@ -29,21 +34,29 @@ function AuthContextProvider({children}) {
   }
   function logout() {
     setAuthToken(null);
+    setEmail(null);
     setUsername(null);
     AsyncStorage.removeItem('token');
     AsyncStorage.removeItem('email');
+    AsyncStorage.removeItem('username');
   }
-  function storeUsername(email) {
-    setUsername(email);
+  function storeEmail(email) {
+    setEmail(email);
     AsyncStorage.setItem('email', email);
+  }
+  function storeUsername(user) {
+    setUsername(user);
+    AsyncStorage.setItem('username', user);
   }
   const value = {
     token: authToken,
     isAuthenticated: !!authToken,
     authenticate: authenticate,
     logout: logout,
-    storeUsername: storeUsername,
+    storeEmail: storeEmail,
+    email: email,
     username: username,
+    storeUsername: storeUsername,
   };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

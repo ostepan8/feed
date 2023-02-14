@@ -30,7 +30,7 @@ const ProfileScroller = ({data, navigation}) => {
                   });
                 }}>
                 <Image
-                  source={item.item.image}
+                  source={require('../dummy-data/assets/food1.jpg')}
                   style={{
                     width: '100%',
                     height: '100%',

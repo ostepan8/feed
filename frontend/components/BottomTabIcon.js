@@ -15,7 +15,7 @@ const BottomTabIcon = ({icon, navigate, where, color}) => {
         <FontAwesomeIcon
           style={{color: color}}
           icon={icon}
-          size={width / 14}></FontAwesomeIcon>
+          size={width / 16}></FontAwesomeIcon>
       </Pressable>
     </View>
   );
@@ -30,5 +30,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 6,
     top: 6,
+    marginHorizontal: -5,
   },
 });

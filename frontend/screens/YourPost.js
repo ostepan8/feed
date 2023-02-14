@@ -15,31 +15,21 @@ import user from '../dummy-data/dummyData';
 import {useWindowDimensions} from 'react-native';
 import {faHeart} from '@fortawesome/free-regular-svg-icons';
 import {faComment} from '@fortawesome/free-regular-svg-icons';
-import {createDrawerNavigator} from '@react-navigation/drawer';
-
-const Drawer = createDrawerNavigator();
-
-function MyDrawer() {
-  return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="Feed" component={ReactImage} />
-    </Drawer.Navigator>
-  );
-}
-function ReactImage() {
-  return (
-    <View>
-      <Image
-        source={require('../dummy-data/assets/food1.jpg')}
-        style={{height: '100%', width: '100%'}}></Image>
-    </View>
-  );
-}
+import PostPicture from '../components/PostPicture';
+import {AuthContext} from '../store/auth-context';
+import {useContext} from 'react';
 
 const YourPost = ({navigation, route}) => {
+  const AuthCntx = useContext(AuthContext);
   const {height, width} = useWindowDimensions();
-  const {caption, image, restaurant, time} = route.params.data;
-
+  const {caption, image, location, time} = route.params.data;
+  const dataObject = {
+    caption: caption,
+    image: image,
+    location: location,
+    time: time,
+    username: AuthCntx.username,
+  };
   return (
     <ScrollView>
       <SafeAreaView>
@@ -58,9 +48,9 @@ const YourPost = ({navigation, route}) => {
             <FontAwesomeIcon icon={faArrowLeft} size={20} />
           </View>
         </View>
-        <Text>{user.username}</Text>
+
         <View style={[styles.post, {width: width, height: width}]}>
-          <MyDrawer />
+          <PostPicture params={dataObject}></PostPicture>
         </View>
         <View style={styles.buttonContainer}>
           <View style={styles.heart}>

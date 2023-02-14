@@ -31,6 +31,8 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
 import { faList } from '@fortawesome/free-solid-svg-icons';
 import color from './color';
+import NewPost from './screens/NewPost';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
 
 
 function UnAuthenticatedStack(){
@@ -67,6 +69,20 @@ function AuthenticatedStack(){
         tabBarButton: (props) => (
           <View style={styles.bottomTabContainer}>
             <BottomTabIcon navigate ={navigation.navigate} where={"Search"}icon={faMagnifyingGlass} color={props.accessibilityState?.selected? color.primaryOrange:'#00000050'} />         
+          </View>
+        
+          
+        ),
+        headerShown: false
+      })}
+    />
+    <Tab.Screen
+      name="NewPost"
+      component={NewPost}
+      options={({ navigation }) => ({
+        tabBarButton: (props) => (
+          <View style={styles.bottomTabContainer}>
+            <BottomTabIcon navigate ={navigation.navigate} where={"NewPost"}icon={faPlus} color={props.accessibilityState?.selected? color.primaryOrange:'#00000050'} />         
           </View>
         
           

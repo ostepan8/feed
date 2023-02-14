@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const User = mongoose.model("User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const Post = mongoose.model("Post");
 
 require("dotenv").config();
 
@@ -54,7 +55,7 @@ router.post("/signin", async (req, res) => {
     bcrypt.compare(password, savedUser.password, (err, result) => {
       if (result) {
         const token = jwt.sign({ _id: savedUser._id }, process.env.JWT_SECRET);
-        res.send({ token });
+        res.send({ token: token, username: savedUser.username });
       } else {
         return res.status(422).json({ error: "Invalid Credentials" });
       }
@@ -78,6 +79,49 @@ router.post("/editprofile", async (req, res) => {
   savedUser.bio = bio;
   await savedUser.save();
   return;
+});
+router.post("/NewPost", async (req, res) => {
+  const { username, caption, location, time, type } = req.body;
+  if (!username || !caption || !location || !time || !type) {
+    return res.status(422).json({ error: "Please fill out all forms" });
+  }
+  const post = new Post({
+    username,
+    caption,
+    location,
+    time,
+    type,
+  });
+  try {
+    await post.save();
+    res.send({ post });
+  } catch (err) {
+    return res.status(422).send({ error: err.message });
+  }
+});
+router.post("/getPosts", async (req, res) => {
+  const { email } = req.body;
+  const savedUser = await User.findOne({ email: email });
+
+  const breakfastPosts = await Post.find({
+    username: savedUser.username,
+    type: "Breakfast",
+  });
+  const lunchPosts = await Post.find({
+    username: savedUser.username,
+    type: "Lunch",
+  });
+  const dinnerPosts = await Post.find({
+    username: savedUser.username,
+    type: "Dinner",
+  });
+  const posts = {
+    breakfast: breakfastPosts,
+    lunch: lunchPosts,
+    dinner: dinnerPosts,
+  };
+
+  res.send(posts);
 });
 
 module.exports = router;

@@ -41,3 +41,28 @@ userSchema.pre("save", async function (next) {
 });
 
 mongoose.model("User", userSchema);
+
+const postSchema = new mongoose.Schema({
+  username: {
+    type: String,
+    required: true,
+  },
+  caption: {
+    type: String,
+    required: true,
+  },
+  time: {
+    type: String,
+    required: true,
+  },
+  location: {
+    type: String,
+    required: true,
+  },
+  type: {
+    type: String,
+    required: true,
+  },
+});
+
+mongoose.model("Post", postSchema);

@@ -1,14 +1,24 @@
-import {StyleSheet, Text, View, SafeAreaView, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Image,
+  Pressable,
+} from 'react-native';
 import React from 'react';
 import {useEffect} from 'react';
 import user from '../dummy-data/dummyData';
-import {FlatList} from 'react-native-gesture-handler';
+import {FlatList, TextInput} from 'react-native-gesture-handler';
 import {useWindowDimensions} from 'react-native';
 import FeedPicture from '../assets/img/feed.png';
 import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import {faLocationDot} from '@fortawesome/free-solid-svg-icons';
 import {faUser} from '@fortawesome/free-solid-svg-icons';
 import {faCalendarDays} from '@fortawesome/free-solid-svg-icons';
+import color from '../color';
+import {faComment, faHeart} from '@fortawesome/free-regular-svg-icons';
+import PostPicture from '../components/PostPicture';
 const Feed = ({navigation, route}) => {
   const {height, width} = useWindowDimensions();
   return (
@@ -30,42 +40,63 @@ const Feed = ({navigation, route}) => {
         renderItem={item => {
           return (
             <View style={{width: width, height: height / 1.5}}>
-              <View
-                style={{
-                  width: width,
-                  height: width,
-                  overflow: 'hidden',
-                  position: 'absolute',
-                }}>
-                <Image
-                  source={item.item.image}
-                  style={{
-                    zIndex: -1,
-                    width: '100%',
-                    height: '100%',
-                    resizeMode: 'cover',
-                  }}></Image>
-              </View>
-              <View style={{flexDirection: 'row'}}>
-                <View style={styles.upperLeftContainer}>
-                  <Text style={styles.upperTextStyle}>
-                    <FontAwesomeIcon icon={faUser} color={'white'} />{' '}
-                    {user.username}
-                  </Text>
-                  <Text style={styles.text}>
-                    <FontAwesomeIcon
-                      color={'white'}
-                      icon={faCalendarDays}></FontAwesomeIcon>{' '}
-                    {user.posts[item.index].time}
-                  </Text>
-                </View>
+              <PostPicture params={item.item}></PostPicture>
+              <View>
                 <View>
-                  <View style={styles.upperRightContainer}>
-                    <Text style={styles.text}>
-                      <FontAwesomeIcon icon={faLocationDot} color={'white'} />
-                      {'  '}
-                      {item.item.restaurant}
-                    </Text>
+                  <View
+                    style={{
+                      borderBottomWidth: 1,
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                    }}>
+                    <FontAwesomeIcon
+                      style={styles.icon}
+                      size={width / 12}
+                      icon={faHeart}></FontAwesomeIcon>
+                    <FontAwesomeIcon
+                      style={styles.icon}
+                      size={width / 12}
+                      icon={faComment}></FontAwesomeIcon>
+                    <FontAwesomeIcon
+                      style={styles.icon}
+                      size={width / 12}
+                      icon={faHeart}></FontAwesomeIcon>
+                  </View>
+
+                  <View
+                    style={{
+                      paddingHorizontal: 8,
+                      paddingVertical: 8,
+                      borderBottomWidth: 1,
+                    }}>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={{fontFamily: 'RedHatDisplay-Bold'}}>
+                        user123{' '}
+                      </Text>
+                      <Text>Lol</Text>
+                    </View>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={{fontFamily: 'RedHatDisplay-Bold'}}>
+                        plauer323{' '}
+                      </Text>
+                      <Text>OMG</Text>
+                    </View>
+                    <View style={{flexDirection: 'row'}}>
+                      <Text style={{fontFamily: 'RedHatDisplay-Bold'}}>
+                        esato23{' '}
+                      </Text>
+                      <Text>this looks really good</Text>
+                    </View>
+                    <Pressable>
+                      <Text
+                        style={{
+                          fontFamily: 'RedHatDisplay-Bold',
+                          color: color.primaryOrange,
+                          textDecorationLine: 'underline',
+                        }}>
+                        Add a comment
+                      </Text>
+                    </Pressable>
                   </View>
                 </View>
               </View>
@@ -98,4 +129,9 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   text: {fontFamily: 'RedHatDisplay-Bold', color: 'white'},
+  icon: {
+    color: color.primaryOrange,
+    marginHorizontal: 8,
+    marginVertical: 8,
+  },
 });
